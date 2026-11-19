@@ -256,7 +256,7 @@ claro/oscuro; sin cambios en backend/contratos. Plan y crítica antes del códig
 - [x] Cabecera, ilustraciones/categorías, cuadrícula 1/2/3 columnas y textos sin truncar.
 - [x] Build, 104 JVM sin fallos, lint y ktlint aprobados.
 - [x] Doce casos físicos: once aprobados y uno omitido; capturas claro/oscuro y a320dp/font200% revisadas.
-- [ ] Actualizar evidencia final, subir y comprobar nuevo PR. Sin merge por el agente.
+- [x] Evidencia final y PR2 publicados; ambos checks aprobados. Fusionado por el propietario, no por el agente.
 
 Continuidad para otro agente: [HANDOFF.md](HANDOFF.md). Se actualiza durante el
 trabajo, registra comandos, autorizaciones, estado y siguientes pasos sin secretos.
@@ -266,3 +266,20 @@ físicos (11 aprobados/1 omitido). Primeras observaciones visuales corregidas y
 suite repetida. App instalada y abierta. Continuidad actualizada en HANDOFF.md.
 Publicación/CI del PR de esta rama: consultar GitHub; no confundirlo con PR1,
 ya fusionado por el propietario y con ambos checks aprobados.
+
+## Fotografías de categorías aportadas por el usuario
+
+Rama `feature/category-photographs` sobre `51c4f59` (PR2 fusionado por el propietario).
+
+- [x] Conservar los cuatro PNG originales e integrar sus WebP en Cultura,
+  Aventura, Ecoturismo y Gastronomía (`gastronomico`).
+- [x] Optimizar copias sin ampliar las fuentes, incorporar créditos y revisar
+  recortes a anchos representativos de una, dos y tres columnas.
+- [x] Compilar APK debug e instrumentado. 104 pruebas JVM sin fallos,
+  lint y ktlint aprobados mediante `verify-android.sh`.
+- [x] Ejecutar el runner físico y revisar la cuadrícula de dos columnas
+  en claro y oscuro. Doce casos, once aprobados y uno omitido sin fallos.
+- [x] Publicar [PR borrador #3](https://github.com/VitasMarta/VitasMarta_Frontend-movil/pull/3).
+- [ ] Verificar CI del PR.
+
+Asignación, encuadres y continuidad en [HANDOFF.md](HANDOFF.md).

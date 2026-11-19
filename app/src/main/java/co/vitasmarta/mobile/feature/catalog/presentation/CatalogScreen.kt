@@ -103,6 +103,7 @@ fun CatalogScreen(
             maxWidth >= 840.dp -> 3
             else -> 2
         }
+        val categoryRowMaxWidth = if (columns == 1) 380.dp else 1120.dp
         LazyColumn(
             modifier = Modifier.widthIn(max = 1120.dp).fillMaxWidth().align(Alignment.TopCenter),
             contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
@@ -193,7 +194,10 @@ fun CatalogScreen(
                     items(state.categories.chunked(columns), key = { row ->
                         row.joinToString(":") { it.slug }
                     }) { row ->
-                        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                        Row(
+                            modifier = Modifier.widthIn(max = categoryRowMaxWidth),
+                            horizontalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
                             row.forEach { category ->
                                 ExploreCategoryTile(
                                     category,

@@ -1,8 +1,8 @@
 # Continuidad — estado vigente del trabajo
 
-Última actualización: cierre local del rediseño fotográfico de Explorar,2026-11-18.
-Actualizar al terminar cada bloque y antes de agotar contexto. Primero contrastar
-este archivo con git status y GitHub: no repetir trabajo ya aprobado sin cambios.
+Última actualización: integración de las cuatro fotos en Explorar.
+Rama `feature/category-photographs`, base `51c4f59` (PR2 fusionado por el propietario).
+Contrastar este registro con Git y GitHub antes de continuar.
 
 ## Instrucciones del propietario
 
@@ -16,17 +16,44 @@ este archivo con git status y GitHub: no repetir trabajo ya aprobado sin cambios
 - Avisar cuando se necesite teléfono USB; no modificar ajustes de seguridad.
 - Skills frontend-design y modern-web-guidance obligatorias, adaptadas a Compose.
 
-## Base y rama
+## Fotografías de categorías integradas
 
-PR1 fusionado por el propietario; main1ff9240876f11b6144c51597b07e6d04dd94e282.
-Ambos checks de su código e096f6810dba9dc637918032db08f9e467f7687b aprobados.
-Rama de rediseño: feature/explore-visual-redesign. El propietario dijo «Dale» a
-mejorar Explorar con portada fotográfica, categorías visuales y fondos.
+### Asignación exacta
 
-Consultar git log/status y gh pr view --repo VitasMarta/VitasMarta_Frontend-movil
-para saber si el commit/push/PR de esta rama ya se publicó. No inferir que falta
-publicarlo solo porque este archivo no guarda un hash de su propio commit.
-El PR1 NO es el PR del rediseño. No hacer merge aunque los checks estén verdes.
+| Imagen del mensaje | Contenido | Categoría / slug técnico | Original permanente |
+|---|---|---|---|
+| #1 | Catedral blanca | Cultura / `cultura` | [cultura.png](../design/category-references/cultura.png) |
+| #2 | Sendero y terrazas entre vegetación | Aventura / `aventura` | [aventura.png](../design/category-references/aventura.png) |
+| #3 | Playa con mirador de techo de palma | Ecoturismo / `ecoturismo` | [ecoturismo.png](../design/category-references/ecoturismo.png) |
+| #4 | Pescado, patacones y arroz | Gastronomía / `gastronomico` | [gastronomia.png](../design/category-references/gastronomia.png) |
+
+Los originales están copiados byte a byte dentro del repositorio. No depender
+de /tmp/codex-clipboard-*; pueden desaparecer al cambiar de sesión. No inventar
+licencias/autorías de estos adjuntos ni reutilizar los créditos Commons anteriores
+para atribuirles autoría. La procedencia conocida es «aportadas por el usuario».
+
+### Implementación y evidencia
+
+- Las cuatro copias WebP conservan el tamaño de sus originales y suman 352 518 bytes.
+- Las tarjetas usan una proporción 1,65:1, con un máximo de 380 dp para la
+  fila de una columna. Cultura ancla arriba, Aventura abajo, Ecoturismo al
+  centro y Gastronomía cerca del centro con un leve ajuste hacia el plato.
+- Se conservaron los slugs, etiquetas de prueba, acciones y el icono para
+  categorías desconocidas. Los créditos de las cuatro fotos indican su
+  procedencia y se conservan las atribuciones existentes.
+- `verify-android.sh` aprobó la compilación de ambos APK, las 104 pruebas JVM,
+  lint y ktlint. Log local en `.local-tools/category-verify.log`.
+- Se revisaron recortes de referencia a anchos representativos de una, dos y
+  tres columnas. En el Xiaomi se revisaron las nuevas fotografías en dos
+  columnas, en claro y oscuro. El caso de 320 dp y letra al 200 % comprueba
+  el nombre largo y el icono de respaldo mediante su fixture existente.
+  Las tres columnas se revisaron mediante recortes de referencia.
+- Runner físico: 12 casos, 11 aprobados y 1 omitido (requiere origen vacío),
+  cero fallos. Log y capturas en `.local-tools/category-device.log` y
+  `.local-tools/category-captures/`.
+
+La foto del plato corresponde a la categoría Gastronomía. Las imágenes de
+restaurantes individuales dependen del catálogo del Gateway.
 
 ## Implementado y comprobado localmente
 
@@ -64,14 +91,8 @@ las pantallas verificadas. El fixture de categoría larga existe solo en android
 
 ## Siguiente paso concreto
 
-1. Si aún falta publicar esta rama, revisar diff/secretos, commit/push y abrir PR
-   normal (sin borrador si ya está listo), con 104 JVM y11 físicas aprobadas.
-2. Verificar TODOS los checks del PR actual antes de dar CI por aprobada. Si ya
-   fue publicado, no crear un PR duplicado; consultar el existente.
-3. Si CI está verde, actualizar descripción del PR con evidencia y comunicar enlace.
-   La revisión visual y el merge corresponden al propietario.
-4. Seguir instrucciones nuevas del propietario; no ampliar otras pantallas por
-   iniciativa propia durante este corte de Explorar.
+Comprobar CI del [PR borrador #3](https://github.com/VitasMarta/VitasMarta_Frontend-movil/pull/3).
+El propietario realiza el merge.
 
 ## Herramientas
 
@@ -115,8 +136,9 @@ la guía si se perdió la cita; no inventar IDs o citas tras compactar contexto.
 ## Contexto funcional pendiente de la entrega anterior
 
 REPOSITORY_RECHECK_2026-11-18.md sustituye el diagnóstico antiguo de catálogo vacío:
-hay tres contenidos públicos, incluido Buffet Hilton en gastronomico; Aventura
-vacía no significa que todo esté vacío. Franjas M2 informativas vacías no prueban
+la auditoría inicial detectó tres contenidos, pero una lectura posterior devolvió
+más restaurantes gastronómicos sin foto. Son observaciones fechadas, no un
+inventario fijo. Una categoría vacía no significa que todo esté vacío. Franjas M2 informativas vacías no prueban
 ausencia de ofertas M3, que exige sesión. Falta transacción privada real/manual.
 Restablecimiento/MFA/OAuth nativo, persistencia de sesión, auditoría accesible
 completa y firma de distribución/Play conservan sus pendientes. No declarar
