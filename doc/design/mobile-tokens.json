@@ -1,0 +1,43 @@
+{
+  "status": "phase_0_proposal_not_runtime_theme",
+  "sourceCommit": "041dce2a2299262eae23c157f1e3d686e314aad8",
+  "colors": {
+    "ink": "#1D2B5C",
+    "mist": "#F4E1DE",
+    "emerald": "#00A060",
+    "emeraldText": "#006B3F",
+    "base": "#FDFBFA",
+    "white": "#FFFFFF",
+    "warning": "#B45309",
+    "critical": "#B91C1C",
+    "line": "#D5DAE3"
+  },
+  "textContrastPairs": [
+    [
+      "ink",
+      "base"
+    ],
+    [
+      "ink",
+      "mist"
+    ],
+    [
+      "white",
+      "ink"
+    ],
+    [
+      "emeraldText",
+      "base"
+    ],
+    [
+      "warning",
+      "base"
+    ],
+    [
+      "critical",
+      "base"
+    ]
+  ],
+  "minimumTextContrast": 4.5,
+  "minimumTouchTargetDp": 48
+}

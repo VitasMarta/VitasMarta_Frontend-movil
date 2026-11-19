@@ -1,0 +1,4 @@
+# Copiar a local.properties (ignorado por Git).
+# sdk.dir=/ruta/local/al/Android/Sdk
+# Origen HTTP o HTTPS autorizado del Gateway, sin /api/v1 ni /bff.
+# api.gateway.url=
