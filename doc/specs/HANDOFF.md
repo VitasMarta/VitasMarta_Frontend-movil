@@ -91,7 +91,8 @@ las pantallas verificadas. El fixture de categoría larga existe solo en android
 
 ## Siguiente paso concreto
 
-Publicar el PR de esta rama y comprobar CI. El propietario realiza el merge.
+Comprobar CI del [PR borrador #3](https://github.com/VitasMarta/VitasMarta_Frontend-movil/pull/3).
+El propietario realiza el merge.
 
 ## Herramientas
 

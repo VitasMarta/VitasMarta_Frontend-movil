@@ -279,6 +279,7 @@ Rama `feature/category-photographs` sobre `51c4f59` (PR2 fusionado por el propie
   lint y ktlint aprobados mediante `verify-android.sh`.
 - [x] Ejecutar el runner físico y revisar la cuadrícula de dos columnas
   en claro y oscuro. Doce casos, once aprobados y uno omitido sin fallos.
-- [ ] Publicar PR y verificar CI.
+- [x] Publicar [PR borrador #3](https://github.com/VitasMarta/VitasMarta_Frontend-movil/pull/3).
+- [ ] Verificar CI del PR.
 
 Asignación, encuadres y continuidad en [HANDOFF.md](HANDOFF.md).
