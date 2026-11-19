@@ -218,16 +218,19 @@ class NativeUiTest {
             compose.onAllNodes(detailAction).fetchSemanticsNodes().isNotEmpty()
         }
         compose.onAllNodes(detailAction)[0].performScrollTo()
-        capture("catalog-published-results")
+        capture("catalog-live-results")
+        val detailName = compose.onAllNodes(detailAction)[0].fetchSemanticsNode()
+            .config[SemanticsProperties.Text].first().text
         compose.onAllNodes(detailAction)[0].performClick()
         compose.waitUntil(15_000) {
-            compose.onAllNodesWithText(text(R.string.catalog_about))
-                .fetchSemanticsNodes().isNotEmpty()
+            compose.onAllNodesWithText(text(R.string.catalog_results_title))
+                .fetchSemanticsNodes().isEmpty() &&
+                compose.onAllNodesWithText(detailName).fetchSemanticsNodes().isNotEmpty()
         }
         compose.onNode(hasScrollAction()).performScrollToNode(
             hasText(text(R.string.catalog_about))
         )
-        capture("catalog-published-detail")
+        capture("catalog-live-detail")
         compose.onNode(hasScrollAction()).performScrollToNode(
             hasText(text(R.string.catalog_booking_options))
         )
