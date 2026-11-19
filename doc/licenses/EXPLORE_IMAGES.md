@@ -14,3 +14,7 @@ Public domain, released worldwide by the author; otherwise permission for any pu
 Changes: resized, WebP compression, metadata removed. Display may crop.
 
 Vector category decorations are drawn in Compose. Photos are editorial decoration, not business records, availability or offers.
+
+explore_cultura.webp, explore_aventura.webp, explore_ecoturismo.webp and explore_gastronomia.webp:
+Category photographs supplied by the project owner. Author and license were not supplied.
+Changes: WebP compression and metadata removal at original dimensions. Display crops to fit the category cards.

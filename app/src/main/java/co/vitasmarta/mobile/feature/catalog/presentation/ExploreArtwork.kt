@@ -8,20 +8,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
-import androidx.compose.material.icons.outlined.AccountBalance
-import androidx.compose.material.icons.outlined.Park
-import androidx.compose.material.icons.outlined.Restaurant
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Sell
-import androidx.compose.material.icons.outlined.Terrain
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -35,6 +31,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.BiasAlignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
@@ -121,7 +118,7 @@ internal fun ExploreCategoryTile(
         color = colors.surfaceContainerLow
     ) {
         Column {
-            CategoryArtwork(category.slug, Modifier.fillMaxWidth().height(108.dp))
+            CategoryArtwork(category.slug, Modifier.fillMaxWidth().aspectRatio(1.65f))
             Row(
                 Modifier.fillMaxWidth().heightIn(min = 64.dp).padding(16.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -147,31 +144,26 @@ internal fun ExploreCategoryTile(
 private fun CategoryArtwork(slug: String, modifier: Modifier) {
     val colors = MaterialTheme.colorScheme
     val photograph = when (slug) {
-        "playa" -> R.drawable.explore_bay
-        "naturaleza" -> R.drawable.explore_tayrona
+        "playa" -> R.drawable.explore_bay to Alignment.CenterStart
+        "naturaleza" -> R.drawable.explore_tayrona to Alignment.CenterStart
+        "cultura" -> R.drawable.explore_cultura to Alignment.TopCenter
+        "aventura" -> R.drawable.explore_aventura to Alignment.BottomCenter
+        "ecoturismo" -> R.drawable.explore_ecoturismo to Alignment.Center
+        "gastronomico" -> R.drawable.explore_gastronomia to BiasAlignment(-.15f, -.25f)
         else -> null
     }
     if (photograph != null) {
         Image(
-            painterResource(photograph),
+            painterResource(photograph.first),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            alignment = Alignment.CenterStart,
+            alignment = photograph.second,
             modifier = modifier
         )
     } else {
-        val heritage = slug == "cultura" || slug == "gastronomico"
-        val background = if (heritage) colors.primaryContainer else colors.secondaryContainer
-        val foreground = if (heritage) colors.onPrimaryContainer else colors.onSecondaryContainer
-        val symbol = when (slug) {
-            "aventura" -> Icons.Outlined.Terrain
-            "cultura" -> Icons.Outlined.AccountBalance
-            "ecoturismo" -> Icons.Outlined.Park
-            "gastronomico" -> Icons.Outlined.Restaurant
-            else -> Icons.Outlined.Sell
-        }
+        val foreground = colors.onSecondaryContainer
         Box(
-            modifier.background(background).clipToBounds(),
+            modifier.background(colors.secondaryContainer).clipToBounds(),
             contentAlignment = Alignment.Center
         ) {
             Canvas(Modifier.fillMaxSize()) {
@@ -183,7 +175,7 @@ private fun CategoryArtwork(slug: String, modifier: Modifier) {
                 drawCircle(foreground.copy(alpha = .06f), size.width * .28f, Offset(size.width, 0f))
             }
             Icon(
-                symbol,
+                Icons.Outlined.Sell,
                 contentDescription = null,
                 tint = foreground,
                 modifier = Modifier.size(56.dp)
@@ -202,6 +194,11 @@ internal fun ExploreImageCredits() {
     Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
         Text(
             stringResource(R.string.explore_image_credits),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        Text(
+            stringResource(R.string.explore_category_photo_credits),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
