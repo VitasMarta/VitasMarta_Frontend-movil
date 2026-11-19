@@ -65,3 +65,11 @@ ejecutados en ese intento. No se presenta como prueba aprobada.
 La versión debug verificada quedó instalada y se abrió correctamente antes de
 la desconexión. Al regresar el propietario, probar Buscar atractivos o Gastronomía
 y acceder a Ver opciones de reserva tras iniciar sesión, sin inventar datos.
+
+## Resultado posterior al regreso del propietario
+
+USB reconectado, instalación aceptada y nueva prueba corregida aprobada. Suite
+directa NativeUiTest: once casos, diez aprobados y uno omitido, cero fallos.
+Listados y ficha públicos reales probados hasta acceso contextual a reservas.
+El bloqueo por desconexión quedó resuelto. No se infiere de esto que M3 tenga
+ofertas para cada publicación; falta comprobar su respuesta con sesión.

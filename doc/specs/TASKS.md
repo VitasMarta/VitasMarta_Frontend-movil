@@ -1,6 +1,6 @@
 # Plan de implementación
 
-Estado al 2026-11-18: flujo turista de Fases 2–4 implementado y activado en orden tras verificar cada corte. 104 pruebas JVM aprobadas, lint sin errores/advertencias, formato aprobado; APK debug, APK release sin firma y AAB compilados. Diez casos físicos ejecutados: nueve aprobados y uno omitido; caso adicional de contenido publicado compilado, pendiente de reconectar USB. Quedan pendientes identidad avanzada, comprobación remota de operaciones privadas, accesibilidad completa y firma de distribución. Los registros inferiores son históricos; este estado y [IMPLEMENTATION.md](IMPLEMENTATION.md) prevalecen.
+Estado al 2026-11-18: flujo turista de Fases 2–4 implementado y activado en orden tras verificar cada corte. 104 pruebas JVM aprobadas, lint sin errores/advertencias, formato aprobado; APK debug, APK release sin firma y AAB compilados. Once casos físicos: diez aprobados y uno omitido, incluido contenido publicado → ficha → acceso de reserva. Quedan pendientes identidad avanzada, comprobación remota de operaciones privadas, accesibilidad completa y firma de distribución. Los registros inferiores son históricos; este estado y [IMPLEMENTATION.md](IMPLEMENTATION.md) prevalecen.
 
 ## Fase 0 — Descubrimiento y diseño (bloqueante)
 - [x] Leer AGENTS y skills; registrar nombres/rutas/versiones. Evidencia: [PHASE_0.md](PHASE_0.md), frontend-design 1.1.1 y modern-web-guidance 1.0.1; ambas leídas y aplicadas a la propuesta.
@@ -24,7 +24,7 @@ Estado al 2026-11-18: flujo turista de Fases 2–4 implementado y activado en or
 - [x] Completar catálogo, filtros, cursor, detalles y franjas.
   - [x] Categorías públicas con DTO, mapper/repositorio, ViewModel y UI de estados; búsqueda local por nombre/slug y filtro de principales.
   - [x] Búsqueda, filtros, cursor, ficha y franjas con DTO de M2 c71ad902; tests deterministas aprobados. El despliegue auditado devuelve cero atractivos: no se declara prueba remota de ficha/reserva exitosa.
-- [ ] Completar pruebas de UI del alcance total. 104 JVM/MockWebServer aprobadas; diez casos físicos: nueve aprobados y uno omitido; caso adicional de contenido publicado pendiente por desconexión USB. No equivale a prueba remota de mutaciones privadas.
+- [ ] Completar pruebas de UI del alcance total. 104 JVM/MockWebServer aprobadas; once casos físicos: diez aprobados y uno omitido, incluido el recorrido publicado/ficha/acceso contextual. No equivale a prueba remota de mutaciones privadas.
 
 ## Fase 3 — Reservas
 - [x] Integrar flujo de reserva, idempotencia y resolución de conflictos.
@@ -229,3 +229,17 @@ Se conservan cambios exclusivamente en el repositorio móvil y referencias de
 otros repositorios sin edición. La autorización no cambia por sí sola la política
 de sandbox de la herramienta. Se prepara commit y PR revisable con pendientes
 remotos/USB explícitos; no se publicará una app en Play ni se hará merge.
+
+## Cierre posterior tras reconectar el celular
+
+- [x] Once casos físicos con AndroidJUnitRunner: diez aprobados, uno omitido y cero fallos.
+- [x] Recorrido listado público publicado → ficha real → botón de reserva → acceso contextual aprobado.
+- [x] Capturas reales revisadas y guardadas; app instalada y abierta para prueba manual.
+- [x] Commit/push realizados y PR borrador [#1](https://github.com/VitasMarta/VitasMarta_Frontend-movil/pull/1) abierto; no merge.
+- [x] Corregir instalación CI de paquete SDK tools retirado; platform-tools verificado remotamente.
+- [ ] Cerrar CI con SDK aislado API36: ejecución remota pendiente de resultado.
+- [ ] Verificar ofertas M3 con sesión y realizar transacción real únicamente cuando el propietario lo solicite de forma concreta.
+
+Este corte sustituye el bloqueo USB y los pendientes del caso publicado en los
+registros inmediatamente anteriores. Pruebas privadas reales, identidad avanzada,
+accesibilidad exhaustiva y firma de distribución conservan sus pendientes.

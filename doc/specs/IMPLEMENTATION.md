@@ -28,8 +28,8 @@ Verificación secuencial por fases: verify-android.sh BUILD SUCCESSFUL en cada c
 104 pruebas JVM, cero fallos/errores/omitidas; lint cero errores/advertencias y
 ktlint aprobado. :app:bundleRelease :app:assembleRelease BUILD SUCCESSFUL con R8.
 APK release sin clave de distribución; no se firma para publicar ni se publica.
-Suite física de diez casos ejecutada: nueve aprobados y uno omitido; cero fallos.
-Nueva prueba de contenido publicado compilada, pendiente por desconexión USB.
+Suite física vigente de once casos: diez aprobados y uno omitido; cero fallos.
+Incluye listado público real → ficha real → acceso contextual a reserva.
 
 ### Artefactos actuales
 
@@ -49,7 +49,7 @@ reales. Tests de transporte usan respuestas sintéticas solo en src/test; las do
 nuevas pruebas de pantallas reserva/recomendación usan fixtures solo en androidTest.
 No equivalen a reservas reales ni recomendaciones personalizadas reales.
 Identidad avanzada, sesión persistente, TalkBack/multidispositivo y firma de
-distribución siguen pendientes. CI configurada sin ejecución remota acreditada.
+distribución siguen pendientes. CI ejecutada en PR; corrección de preparación SDK en verificación remota.
 
 ## Registro histórico: alcance antes de esta integración
 
@@ -191,3 +191,25 @@ lógica de la versión probada físicamente. La app instalada antes de desconect
 USB corresponde al corte funcional aprobado; las sumas de arriba son las del
 artefacto regenerado. Wrapper Windows normalizado en Git mediante .gitattributes,
 con CRLF en checkout. git diff --cached --check aprobado.
+
+## Cierre vigente de la prueba de publicaciones
+
+El propietario reconectó USB y aceptó instalar ambos APK. Ejecución directa del
+runner AndroidJUnitRunner con gatewaySmoke=true y clase NativeUiTest: once casos,
+diez status=0 aprobados, uno status=-4 (AssumptionViolatedException por origen
+configurado), cero fallos; salida «OK (11 tests)». Esto sustituye el bloqueo USB
+y los estados de prueba pendiente anotados arriba. Dos intentos previos fallaron
+por esperar nodos fuera de la composición LazyColumn; se corrigió la espera por
+título real y performScrollToNode antes de pulsar la acción. No era fallo de API.
+El resumen auxiliar inicial contaba solo -3 como omitido; se corrigió al comprobar
+el status -4 del runner, sin repetir pruebas exitosas ni ocultar un fallo de app.
+
+Capturas reales revisadas en NATIVE_FLOW_VERIFICATION.md. La prueba abrió ficha
+publicada, leyó descripción y llegó al acceso de reserva; no inició sesión ni
+consultó ofertas privadas. App debug conservada instalada y MainActivity abierta.
+
+CI inicial falló al instalar el paquete tools retirado; se configuró platform-tools.
+El runner compartido también provocó OldTargetApi con plataformas preinstaladas
+más nuevas. CI ahora instala API36/BuildTools35 en SDK aislado bajo runner.temp,
+igual que el entorno local, manteniendo lint activo, sin baseline ni supresión.
+La verificación remota de esa corrección sigue pendiente de resultado.

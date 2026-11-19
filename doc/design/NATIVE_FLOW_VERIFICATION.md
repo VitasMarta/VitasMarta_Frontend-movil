@@ -1,7 +1,7 @@
 # Verificación física del flujo turista — 2026-11-18
 
 Xiaomi 2201122G, Android15. connectedDebugAndroidTest con gatewaySmoke=true:
-diez casos, nueve aprobados, uno omitido, cero fallos/errores. La omisión exige
+Corte previo: diez casos, nueve aprobados, uno omitido, cero fallos/errores. La omisión exige
 un build sin Gateway; esta compilación sí tiene origen real. No se hicieron
 mutaciones sobre cuentas o reservas reales.
 
@@ -33,3 +33,18 @@ contenido desplazable. No sustituye TalkBack, texto al 200% o múltiples disposi
 Nueva prueba del catálogo publicado compilada después: pendiente de ejecución
 porque el teléfono se desconectó. No se declara el recorrido físico de ficha/oferta
 aprobado hasta ejecutar esa prueba.
+
+## Catálogo publicado: prueba física final aprobada
+
+Once casos con runner directo: diez aprobados, uno omitido, cero fallos.
+El recorrido selecciona un título real recibido por API, abre su ficha, desplaza
+la galería para leer la descripción y accede al login contextual de reserva.
+La espera y el scroll se ajustaron para elementos LazyColumn aún no compuestos.
+
+![Resultados reales del Gateway: tres contenidos](device-catalog-live-results.png)
+
+![Descripción y precio reales de una ficha publicada](device-catalog-live-detail.png)
+
+Estas dos capturas corresponden al despliegue público real. No acreditan ofertas
+M3, inicio de sesión ni una reserva creada. Sustituyen el estado de prueba
+pendiente por desconexión registrado más arriba.

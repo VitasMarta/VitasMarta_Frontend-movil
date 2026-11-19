@@ -2,7 +2,7 @@
 
 Proyecto Kotlin/Jetpack Compose con Clean Architecture, MVVM y paquetes por feature.
 Flujo turista implementado: catálogo, reservas, perfil y recomendaciones.
-Verificación local aprobada; nueve pruebas físicas aprobadas; limitaciones abajo.
+Verificación local aprobada; diez pruebas físicas aprobadas; limitaciones abajo.
 
 ## Implementado y verificado localmente
 
@@ -19,7 +19,7 @@ Verificación local aprobada; nueve pruebas físicas aprobadas; limitaciones aba
 - Perfil: nombre visible, idioma nativo, intereses, consentimientos, derechos ARCO y exportación PDF.
 - Recomendaciones M6 con transparencia IA, respuesta degradada 206 y alternativas desde el contenido recibido.
 - 104 pruebas JVM/MockWebServer aprobadas; compilaciones debug/release, lint y formato aprobados.
-- Nueve pruebas instrumentadas aprobadas en Android 15 físico, incluida carga real del Gateway;
+- Diez pruebas instrumentadas aprobadas en Android 15 físico, incluida carga real del Gateway;
   un caso de catálogo sin configuración se omite en este build conectado.
 
 Las categorías ya abren resultados y las pestañas privadas consultan sus servicios tras iniciar sesión.
@@ -67,5 +67,6 @@ referencias de solo lectura, fijadas por commit en PHASE_0.md. El diseño web ap
 identidad y comportamiento; la app tiene composición e interacción nativas.
 
 Estado remoto actualizado: [revisión de main y publicaciones](doc/specs/REPOSITORY_RECHECK_2026-11-18.md).
-La prueba física adicional de listado publicado/ficha/acceso a reserva está compilada
-y pendiente de reconectar el teléfono.
+Once casos físicos ejecutados: diez aprobados y uno omitido. El recorrido público
+listado publicado → ficha → acceso contextual a reserva fue aprobado en el teléfono.
+PR de revisión: https://github.com/VitasMarta/VitasMarta_Frontend-movil/pull/1 (sin merge).

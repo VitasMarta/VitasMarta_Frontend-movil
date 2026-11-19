@@ -63,7 +63,7 @@ ViewModel, Route/Screen, éxito/error y tests deterministas apropiados. MockWebS
 y fixtures solo en test/debug. Antes de avanzar de funcionalidad ejecutar assembleDebug,
 testDebugUnitTest, lintDebug y formato; pruebas Compose/instrumentadas cuando exista dispositivo.
 Revisión visual: teléfono pequeño/grande, texto al 200%, teclado, TalkBack, navegación atrás
-y restauración. 104 JVM aprobadas y build/lint/formato verificados por corte. Nueve pruebas físicas aprobadas, una omitida; nuevo caso de ficha publicada pendiente por USB; TalkBack/texto al 200% y múltiples tamaños siguen pendientes.
+y restauración. 104 JVM aprobadas y build/lint/formato verificados por corte. Diez pruebas físicas aprobadas y una omitida; ficha publicada y acceso contextual aprobados; TalkBack/texto al 200% y múltiples tamaños siguen pendientes.
 
 ## Precisiones del contrato implementado
 
