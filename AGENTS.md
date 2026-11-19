@@ -9,3 +9,5 @@ Estado y bloqueos: [doc/specs/TASKS.md](doc/specs/TASKS.md).
 Referencias fijadas y reglas de precedencia: [doc/specs/PHASE_0.md](doc/specs/PHASE_0.md).
 Los repositorios de referencia son de solo lectura; todos los cambios se hacen
 exclusivamente en este repositorio móvil.
+
+Continuidad del trabajo actual: [doc/specs/HANDOFF.md](doc/specs/HANDOFF.md).

@@ -1,6 +1,6 @@
 # Plan de implementación
 
-Estado al 2026-11-18: flujo turista de Fases 2–4 implementado y activado en orden tras verificar cada corte. 104 pruebas JVM aprobadas, lint sin errores/advertencias, formato aprobado; APK debug, APK release sin firma y AAB compilados. Once casos físicos: diez aprobados y uno omitido, incluido contenido publicado → ficha → acceso de reserva. Quedan pendientes identidad avanzada, comprobación remota de operaciones privadas, accesibilidad completa y firma de distribución. Los registros inferiores son históricos; este estado y [IMPLEMENTATION.md](IMPLEMENTATION.md) prevalecen.
+Estado al 2026-11-18: flujo turista de Fases 2–4 implementado y activado en orden tras verificar cada corte. 104 pruebas JVM aprobadas, lint sin errores/advertencias, formato aprobado; APK debug, APK release sin firma y AAB compilados. Doce casos físicos actuales: once aprobados y uno omitido; incluye letra200% y navegación de catálogo. Quedan pendientes identidad avanzada, comprobación remota de operaciones privadas, accesibilidad completa y firma de distribución. Los registros inferiores son históricos; este estado y [IMPLEMENTATION.md](IMPLEMENTATION.md) prevalecen.
 
 ## Fase 0 — Descubrimiento y diseño (bloqueante)
 - [x] Leer AGENTS y skills; registrar nombres/rutas/versiones. Evidencia: [PHASE_0.md](PHASE_0.md), frontend-design 1.1.1 y modern-web-guidance 1.0.1; ambas leídas y aplicadas a la propuesta.
@@ -243,3 +243,26 @@ remotos/USB explícitos; no se publicará una app en Play ni se hará merge.
 Este corte sustituye el bloqueo USB y los pendientes del caso publicado en los
 registros inmediatamente anteriores. Pruebas privadas reales, identidad avanzada,
 accesibilidad exhaustiva y firma de distribución conservan sus pendientes.
+
+## Rediseño fotográfico de Explorar — en curso
+
+Rama feature/explore-visual-redesign sobre main 1ff9240 (PR1 fusionado por el
+propietario). Autorizado: portada fotográfica, categorías visuales, fondos
+claro/oscuro; sin cambios en backend/contratos. Plan y crítica antes del código:
+[EXPLORE_VISUAL_REDESIGN.md](../design/EXPLORE_VISUAL_REDESIGN.md).
+
+- [x] Skills frontend-design y modern-web-guidance, guías de imágenes y color.
+- [x] Fotografías locales WebP con fuentes y licencias documentadas; 132KB.
+- [x] Cabecera, ilustraciones/categorías, cuadrícula 1/2/3 columnas y textos sin truncar.
+- [x] Build, 104 JVM sin fallos, lint y ktlint aprobados.
+- [x] Doce casos físicos: once aprobados y uno omitido; capturas claro/oscuro y a320dp/font200% revisadas.
+- [ ] Actualizar evidencia final, subir y comprobar nuevo PR. Sin merge por el agente.
+
+Continuidad para otro agente: [HANDOFF.md](HANDOFF.md). Se actualiza durante el
+trabajo, registra comandos, autorizaciones, estado y siguientes pasos sin secretos.
+
+Verificación del rediseño cerrada localmente: 104 JVM, lint/ktlint y12 casos
+físicos (11 aprobados/1 omitido). Primeras observaciones visuales corregidas y
+suite repetida. App instalada y abierta. Continuidad actualizada en HANDOFF.md.
+Publicación/CI del PR de esta rama: consultar GitHub; no confundirlo con PR1,
+ya fusionado por el propietario y con ambos checks aprobados.

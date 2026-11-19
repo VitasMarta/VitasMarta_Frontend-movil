@@ -1,0 +1,14 @@
+Explore photography
+
+explore_tayrona.webp: Felipe Restrepo Acosta, 2019 Santa Marta - Ensenadas en el Parque nacional natural Tayrona.jpg.
+Source: https://commons.wikimedia.org/wiki/File:2019_Santa_Marta_-_Ensenadas_en_el_Parque_nacional_natural_Tayrona.jpg
+License: Creative Commons Attribution-ShareAlike 4.0 International
+https://creativecommons.org/licenses/by-sa/4.0/
+Derivative image distributed under CC BY-SA 4.0. Changes: resized, WebP compression, metadata removed. Display may crop. No endorsement implied.
+
+explore_bay.webp: Petruss, Santa Marta Bahia.jpg.
+Source: https://commons.wikimedia.org/wiki/File:Santa_Marta_Bahia.jpg
+Public domain, released worldwide by the author; otherwise permission for any purpose without conditions except those required by law.
+Changes: resized, WebP compression, metadata removed. Display may crop.
+
+Vector category decorations are drawn in Compose. Photos are editorial decoration, not business records, availability or offers.
