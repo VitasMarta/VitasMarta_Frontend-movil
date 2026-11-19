@@ -18,6 +18,7 @@ import androidx.compose.ui.test.assertIsOn
 import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.hasScrollAction
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
@@ -26,6 +27,7 @@ import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
+import androidx.compose.ui.test.performScrollToNode
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import co.vitasmarta.mobile.app.MainActivity
@@ -222,9 +224,14 @@ class NativeUiTest {
             compose.onAllNodesWithText(text(R.string.catalog_about))
                 .fetchSemanticsNodes().isNotEmpty()
         }
+        compose.onNode(hasScrollAction()).performScrollToNode(
+            hasText(text(R.string.catalog_about))
+        )
         capture("catalog-published-detail")
-        compose.onNodeWithText(text(R.string.catalog_booking_options))
-            .performScrollTo().performClick()
+        compose.onNode(hasScrollAction()).performScrollToNode(
+            hasText(text(R.string.catalog_booking_options))
+        )
+        compose.onNodeWithText(text(R.string.catalog_booking_options)).performClick()
         compose.onNodeWithText(text(R.string.login_title)).assertIsDisplayed()
     }
 
