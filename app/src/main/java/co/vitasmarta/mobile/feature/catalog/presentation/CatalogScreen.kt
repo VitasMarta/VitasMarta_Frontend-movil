@@ -1,32 +1,33 @@
 package co.vitasmarta.mobile.feature.catalog.presentation
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.CloudOff
 import androidx.compose.material.icons.outlined.FilterList
 import androidx.compose.material.icons.outlined.Search
-import androidx.compose.material.icons.outlined.Sell
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilledTonalIconButton
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -43,9 +44,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.heading
@@ -56,7 +58,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.vitasmarta.mobile.R
 import co.vitasmarta.mobile.core.designsystem.ErrorNotice
-import co.vitasmarta.mobile.core.designsystem.TerritoryMark
 
 @Composable
 fun CatalogRoute(
@@ -92,170 +93,121 @@ fun CatalogScreen(
     val keyboard = LocalSoftwareKeyboardController.current
     var showFilters by rememberSaveable { mutableStateOf(false) }
     val colors = MaterialTheme.colorScheme
-    LazyColumn(
-        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 16.dp),
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+    BoxWithConstraints(
+        Modifier.fillMaxSize().background(
+            Brush.verticalGradient(listOf(colors.background, colors.surfaceContainerLow))
+        )
     ) {
-        item {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-                    Text(
-                        stringResource(R.string.native_explore_title),
-                        style = MaterialTheme.typography.headlineLarge,
-                        modifier = Modifier.semantics { heading() }
-                    )
-                    Text(
-                        stringResource(R.string.native_explore_description),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = colors.onSurfaceVariant
-                    )
-                }
-                TerritoryMark(Modifier.size(88.dp, 104.dp))
-            }
+        val columns = when {
+            maxWidth < 360.dp || LocalDensity.current.fontScale >= 1.5f -> 1
+            maxWidth >= 840.dp -> 3
+            else -> 2
         }
-        item {
-            OutlinedButton(
-                onClick = onSearch,
-                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
-                shape = MaterialTheme.shapes.medium
-            ) { Text(stringResource(R.string.catalog_search_attractions)) }
-        }
-        item {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                OutlinedTextField(
-                    value = filters.query, onValueChange = onQuery,
-                    enabled = state is CatalogState.Content,
-                    label = { Text(stringResource(R.string.search_categories)) },
-                    leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = null) },
-                    trailingIcon = {
-                        if (filters.query.isNotEmpty()) {
-                            IconButton(onClick = { onQuery("") }) {
-                                Icon(Icons.Outlined.Close, stringResource(R.string.clear_search))
-                            }
-                        }
-                    },
-                    singleLine = true, shape = MaterialTheme.shapes.medium,
-                    modifier = Modifier.weight(1f),
-                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                    keyboardActions = KeyboardActions(onDone = { keyboard?.hide() })
+        LazyColumn(
+            modifier = Modifier.widthIn(max = 1120.dp).fillMaxWidth().align(Alignment.TopCenter),
+            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
+        ) {
+            item { ExploreHero(onSearch) }
+            item {
+                CategorySearchControls(
+                    filters.query,
+                    state is CatalogState.Content,
+                    columns == 1,
+                    onQuery,
+                    onFilters = {
+                        keyboard?.hide()
+                        showFilters = true
+                    }
                 )
-                FilledTonalIconButton(
-                    onClick = { showFilters = true },
-                    enabled = state is CatalogState.Content,
-                    shape = MaterialTheme.shapes.medium,
-                    modifier = Modifier.size(56.dp)
-                ) {
-                    Icon(Icons.Outlined.FilterList, stringResource(R.string.filters))
-                }
             }
-        }
-        when (state) {
-            CatalogState.Loading -> item {
-                Row(
-                    Modifier.padding(vertical = 24.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(16.dp)
-                ) {
-                    CircularProgressIndicator(Modifier.size(24.dp))
-                    Text(
-                        stringResource(R.string.loading_categories),
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
-            }
-            is CatalogState.Error -> item {
-                Surface(color = colors.surfaceContainerHigh, shape = MaterialTheme.shapes.large) {
-                    Column(
-                        Modifier.fillMaxWidth().padding(24.dp),
-                        verticalArrangement = Arrangement.spacedBy(16.dp)
+            when (state) {
+                CatalogState.Loading -> item {
+                    Row(
+                        Modifier.padding(vertical = 24.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
-                        Icon(
-                            Icons.Outlined.CloudOff,
-                            contentDescription = null,
-                            tint = colors.secondary,
-                            modifier = Modifier.size(36.dp)
-                        )
+                        CircularProgressIndicator(Modifier.size(24.dp))
                         Text(
-                            stringResource(R.string.categories_unavailable),
-                            style = MaterialTheme.typography.titleLarge
+                            stringResource(R.string.loading_categories),
+                            style = MaterialTheme.typography.bodyMedium
                         )
-                        ErrorNotice(state.error, onRetry = onRetry, useErrorColor = false)
                     }
                 }
-            }
-            is CatalogState.Content -> {
-                item {
-                    Text(
-                        stringResource(R.string.categories_count, state.categories.size),
-                        style = MaterialTheme.typography.titleLarge,
-                        modifier = Modifier.semantics { heading() }
-                    )
-                }
-                if (state.categories.isEmpty()) {
-                    item {
-                        Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                            Text(
-                                stringResource(
-                                    if (filters.query.isNotBlank() || filters.primaryOnly) {
-                                        R.string.no_categories_match
-                                    } else {
-                                        R.string.categories_empty
-                                    }
-                                ),
-                                color = colors.onSurfaceVariant
+                is CatalogState.Error -> item {
+                    Surface(
+                        color = colors.surfaceContainerHigh,
+                        shape = MaterialTheme.shapes.large
+                    ) {
+                        Column(
+                            Modifier.fillMaxWidth().padding(24.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            Icon(
+                                Icons.Outlined.CloudOff,
+                                contentDescription = null,
+                                tint = colors.secondary,
+                                modifier = Modifier.size(36.dp)
                             )
-                            if (filters.query.isNotBlank() || filters.primaryOnly) {
-                                Button(onClick = {
-                                    onQuery("")
-                                    onPrimary(false)
-                                }, shape = MaterialTheme.shapes.medium) {
-                                    Text(stringResource(R.string.clear_filters))
+                            Text(
+                                stringResource(R.string.categories_unavailable),
+                                style = MaterialTheme.typography.titleLarge
+                            )
+                            ErrorNotice(state.error, onRetry = onRetry, useErrorColor = false)
+                        }
+                    }
+                }
+                is CatalogState.Content -> {
+                    item {
+                        Text(
+                            stringResource(R.string.categories_count, state.categories.size),
+                            style = MaterialTheme.typography.titleLarge,
+                            modifier = Modifier.semantics { heading() }
+                        )
+                    }
+                    if (state.categories.isEmpty()) {
+                        item {
+                            Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                                Text(
+                                    stringResource(
+                                        if (filters.query.isNotBlank() || filters.primaryOnly) {
+                                            R.string.no_categories_match
+                                        } else {
+                                            R.string.categories_empty
+                                        }
+                                    ),
+                                    color = colors.onSurfaceVariant
+                                )
+                                if (filters.query.isNotBlank() || filters.primaryOnly) {
+                                    Button(onClick = {
+                                        onQuery("")
+                                        onPrimary(false)
+                                    }, shape = MaterialTheme.shapes.medium) {
+                                        Text(stringResource(R.string.clear_filters))
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                items(state.categories, key = { it.slug }) { category ->
-                    Column {
-                        Row(
-                            Modifier.fillMaxWidth().heightIn(min = 64.dp)
-                                .testTag("catalog-category-${category.slug}")
-                                .clickable(role = Role.Button) { onCategory(category.slug) }
-                                .padding(vertical = 16.dp),
-                            horizontalArrangement = Arrangement.spacedBy(16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Surface(
-                                shape = MaterialTheme.shapes.small,
-                                color = colors.secondaryContainer
-                            ) {
-                                Icon(
-                                    Icons.Outlined.Sell,
-                                    null,
-                                    tint = colors.onSecondaryContainer,
-                                    modifier = Modifier.padding(12.dp).size(24.dp)
+                    items(state.categories.chunked(columns), key = { row ->
+                        row.joinToString(":") { it.slug }
+                    }) { row ->
+                        Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+                            row.forEach { category ->
+                                ExploreCategoryTile(
+                                    category,
+                                    locale,
+                                    onClick = { onCategory(category.slug) },
+                                    modifier = Modifier.weight(1f)
                                 )
                             }
-                            Text(
-                                category.displayName(locale),
-                                style = MaterialTheme.typography.titleMedium,
-                                modifier = Modifier.weight(1f)
-                            )
-                            Icon(
-                                Icons.AutoMirrored.Outlined.ArrowForward,
-                                contentDescription = null
-                            )
+                            repeat(columns - row.size) { Spacer(Modifier.weight(1f)) }
                         }
-                        HorizontalDivider(color = colors.outlineVariant)
                     }
                 }
             }
+            item { ExploreImageCredits() }
         }
     }
     if (showFilters) {
@@ -295,4 +247,68 @@ fun CatalogScreen(
             }
         }
     }
+}
+
+@Composable
+private fun CategorySearchControls(
+    query: String,
+    enabled: Boolean,
+    stacked: Boolean,
+    onQuery: (String) -> Unit,
+    onFilters: () -> Unit
+) {
+    if (stacked) {
+        Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+            CategorySearchField(query, enabled, onQuery, Modifier.fillMaxWidth())
+            OutlinedButton(
+                onClick = onFilters,
+                enabled = enabled,
+                modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                shape = MaterialTheme.shapes.medium
+            ) {
+                Icon(Icons.Outlined.FilterList, null, Modifier.padding(end = 12.dp))
+                Text(stringResource(R.string.filters))
+            }
+        }
+    } else {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            CategorySearchField(query, enabled, onQuery, Modifier.weight(1f))
+            FilledTonalIconButton(
+                onClick = onFilters,
+                enabled = enabled,
+                shape = MaterialTheme.shapes.medium,
+                modifier = Modifier.size(56.dp)
+            ) {
+                Icon(Icons.Outlined.FilterList, stringResource(R.string.filters))
+            }
+        }
+    }
+}
+
+@Composable
+private fun CategorySearchField(
+    query: String,
+    enabled: Boolean,
+    onQuery: (String) -> Unit,
+    modifier: Modifier
+) {
+    val keyboard = LocalSoftwareKeyboardController.current
+    OutlinedTextField(
+        value = query, onValueChange = onQuery, enabled = enabled,
+        label = { Text(stringResource(R.string.search_categories), maxLines = 2) },
+        leadingIcon = { Icon(Icons.Outlined.Search, null) },
+        trailingIcon = {
+            if (query.isNotEmpty()) {
+                IconButton(onClick = { onQuery("") }) {
+                    Icon(Icons.Outlined.Close, stringResource(R.string.clear_search))
+                }
+            }
+        },
+        singleLine = true, shape = MaterialTheme.shapes.medium, modifier = modifier,
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(onDone = { keyboard?.hide() })
+    )
 }

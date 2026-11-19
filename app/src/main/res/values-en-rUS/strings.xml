@@ -264,4 +264,8 @@
     <string name="booking_original_reference">Original reservation: %1$s</string>
     <string name="booking_replacement_reference">Replacement reservation: %1$s</string>
     <string name="booking_external_adjustment">Reported external adjustment: %1$s</string>
+    <string name="explore_image_credits">Photography by Felipe Restrepo Acosta (CC BY-SA 4.0) and Petruss (public domain). Images resized and compressed for the app.</string>
+    <string name="explore_tayrona_source">Tayrona photograph and author</string>
+    <string name="explore_photo_license">Photo licence: CC BY-SA 4.0</string>
+    <string name="explore_bay_source">El Rodadero photograph and author</string>
 </resources>

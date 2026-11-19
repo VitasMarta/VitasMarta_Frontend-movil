@@ -4,10 +4,14 @@ import android.graphics.Bitmap
 import android.os.ParcelFileDescriptor
 import android.security.NetworkSecurityPolicy
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.test.SemanticsMatcher
 import androidx.compose.ui.test.assert
@@ -19,15 +23,19 @@ import androidx.compose.ui.test.assertIsSelected
 import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.hasScrollAction
+import androidx.compose.ui.test.hasTestTag
 import androidx.compose.ui.test.hasText
 import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onAllNodesWithText
 import androidx.compose.ui.test.onNodeWithContentDescription
+import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import androidx.compose.ui.test.onRoot
 import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.compose.ui.test.performScrollToNode
+import androidx.compose.ui.unit.Density
+import androidx.compose.ui.unit.dp
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import co.vitasmarta.mobile.app.MainActivity
@@ -37,6 +45,10 @@ import co.vitasmarta.mobile.feature.booking.domain.BookingOffer
 import co.vitasmarta.mobile.feature.booking.domain.BookingPolicy
 import co.vitasmarta.mobile.feature.booking.presentation.BookingOffersScreen
 import co.vitasmarta.mobile.feature.booking.presentation.BookingOffersState
+import co.vitasmarta.mobile.feature.catalog.domain.Category
+import co.vitasmarta.mobile.feature.catalog.presentation.CatalogFilters
+import co.vitasmarta.mobile.feature.catalog.presentation.CatalogScreen
+import co.vitasmarta.mobile.feature.catalog.presentation.CatalogState
 import co.vitasmarta.mobile.feature.recommendations.domain.RecommendationFeed
 import co.vitasmarta.mobile.feature.recommendations.presentation.RecommendationsScreen
 import co.vitasmarta.mobile.feature.recommendations.presentation.RecommendationsState
@@ -310,6 +322,43 @@ class NativeUiTest {
         ).performScrollTo().assertIsDisplayed()
         compose.onNodeWithText(text(R.string.service_unavailable_body)).assertDoesNotExist()
         capture("fixture-recommendations-empty-dark")
+    }
+
+    @Test
+    fun compactExploreKeepsLongCategoryActionAtTwoHundredPercent() {
+        val clicked = AtomicBoolean(false)
+        val name = "Gastronomía y experiencias culturales"
+        compose.runOnIdle {
+            compose.activity.setContent {
+                val density = LocalDensity.current
+                CompositionLocalProvider(LocalDensity provides Density(density.density, 2f)) {
+                    VitasMartaTheme(darkTheme = true) {
+                        Surface(modifier = Modifier.fillMaxSize()) {
+                            Box(Modifier.requiredWidth(320.dp)) {
+                                CatalogScreen(
+                                    state = CatalogState.Content(
+                                        listOf(Category("test-long", mapOf("es" to name), true))
+                                    ),
+                                    filters = CatalogFilters(),
+                                    onQuery = {},
+                                    onPrimary = {},
+                                    onRetry = {},
+                                    onCategory = { clicked.set(it == "test-long") },
+                                    onSearch = {}
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        compose.onNode(hasScrollAction()).performScrollToNode(
+            hasTestTag("catalog-category-test-long")
+        )
+        compose.onNodeWithText(name).assertIsDisplayed()
+        compose.onNodeWithTag("catalog-category-test-long").performScrollTo().performClick()
+        org.junit.Assert.assertTrue(clicked.get())
+        capture("explore-compact-large-type")
     }
 
     private fun capture(name: String) {

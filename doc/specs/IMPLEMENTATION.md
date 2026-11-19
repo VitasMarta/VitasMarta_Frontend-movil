@@ -3,6 +3,21 @@
 Rama `feature/phase-0-discovery`, base `d49342fb9bfcfb0beb831966e513e787d1b44dbf`.
 Solo se modifica el repositorio móvil. El propietario autorizó fetch/pull/commit/push y PR, excluyendo merge; se prepara entrega en esta rama.
 
+## Rediseño posterior de Explorar
+
+Cabecera fotográfica local y categorías con foto/arte nativo, fondos claros y
+oscuros, controles apilados en ancho/fuente grande y cuadrícula1/2/3 columnas.
+Fotografías WebP con licencia/créditos empaquetados; no cambia la API ni la sesión.
+104 JVM aprobadas, lint/ktlint sin defectos; doce casos físicos, once aprobados
+y uno omitido. Capturas revisadas y ajustes posteriores verificados.
+[Plan/evidencia](../design/EXPLORE_VISUAL_REDESIGN.md).
+
+APK debug actual: 20774452 bytes; SHA-256 `c514af394e2770731c6dc3136f4ca4406dc433ed37b18f44f569236b8886df03`.
+Este hash sustituye el debug del corte anterior de abajo. Los artefactos release
+de abajo pertenecen a la entrega anterior; no se generó una firma de distribución
+nueva para este rediseño. Instalación física y apertura de MainActivity aprobadas.
+Continuidad: [HANDOFF.md](HANDOFF.md).
+
 ## Corte vigente: catálogo, reservas, perfil y recomendaciones
 
 Este corte sustituye las descripciones de funciones pendientes y hashes históricos

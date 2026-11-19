@@ -2,7 +2,7 @@
 
 Proyecto Kotlin/Jetpack Compose con Clean Architecture, MVVM y paquetes por feature.
 Flujo turista implementado: catálogo, reservas, perfil y recomendaciones.
-Verificación local aprobada; diez pruebas físicas aprobadas; limitaciones abajo.
+Verificación local aprobada; once pruebas físicas aprobadas; limitaciones abajo.
 
 ## Implementado y verificado localmente
 
@@ -19,7 +19,7 @@ Verificación local aprobada; diez pruebas físicas aprobadas; limitaciones abaj
 - Perfil: nombre visible, idioma nativo, intereses, consentimientos, derechos ARCO y exportación PDF.
 - Recomendaciones M6 con transparencia IA, respuesta degradada 206 y alternativas desde el contenido recibido.
 - 104 pruebas JVM/MockWebServer aprobadas; compilaciones debug/release, lint y formato aprobados.
-- Diez pruebas instrumentadas aprobadas en Android 15 físico, incluida carga real del Gateway;
+- Once pruebas instrumentadas aprobadas en Android 15 físico, incluida carga real del Gateway;
   un caso de catálogo sin configuración se omite en este build conectado.
 
 Las categorías ya abren resultados y las pestañas privadas consultan sus servicios tras iniciar sesión.
@@ -67,6 +67,10 @@ referencias de solo lectura, fijadas por commit en PHASE_0.md. El diseño web ap
 identidad y comportamiento; la app tiene composición e interacción nativas.
 
 Estado remoto actualizado: [revisión de main y publicaciones](doc/specs/REPOSITORY_RECHECK_2026-11-18.md).
-Once casos físicos ejecutados: diez aprobados y uno omitido. El recorrido público
+Doce casos físicos ejecutados: once aprobados y uno omitido. El recorrido público
 listado publicado → ficha → acceso contextual a reserva fue aprobado en el teléfono.
-PR de revisión: https://github.com/VitasMarta/VitasMarta_Frontend-movil/pull/1 (sin merge).
+Entrega inicial: PR #1 fusionado por el propietario.
+
+Explorar tiene ahora cabecera fotográfica local, categorías visuales, fondos
+claro/oscuro y distribución por ancho/tamaño de letra. [Plan y capturas](doc/design/EXPLORE_VISUAL_REDESIGN.md).
+Continuidad para otro agente: [HANDOFF.md](doc/specs/HANDOFF.md).
